@@ -97,8 +97,6 @@ function restart () {
 
 // =========== jquery starts here ========================================================
 var words = $('#words');
-var buttonTrue = $('#0');
-var buttonFalse = $('#1');
 var button = $('.button');
 var player1Score = $('#player1Score');
 var player2Score = $('#player2Score');
@@ -122,6 +120,8 @@ function updateDisplay () {
 
 button.click(function () {
   var choice = this.id;
-  playTurn(choice);
+  if (choice === 'zero') var z = 0;
+  if (choice === 'one') z = 1;
+  playTurn(z);
   updateDisplay();
 });
