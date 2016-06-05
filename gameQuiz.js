@@ -20,10 +20,21 @@ var question10 = new Question('The popular image of Santa Claus – chubby, bear
 var question11 = new Question('The top of the Eiffel Tower leans away from the sun.', ['True', 'False'], 0);
 var question12 = new Question('The owner of the company that makes Segways died after accidentally driving his Segway off a cliff.', ['True', 'False'], 0);
 var question13 = new Question('The first floppy measured 8 in. (200 mm) in diameter.', ['True', 'False'], 0);
+var question14 = new Question('Google’s company name originates from the mathematical term “googol”.', ['True', 'False'], 0);
+var question15 = new Question('The Great Wall Of China is visible from the moon.', ['True', 'False'], 1);
+var question16 = new Question('The total surface area of two human lungs have a surface area of approximately 70 square metres.', ['True', 'False'], 0);
+var question17 = new Question('The Seine flows through Paris as well as Brussels.', ['True', 'False'], 1);
+var question18 = new Question('Glasgow is the capital of Scotland.', ['True', 'False'], 1);
+var question19 = new Question('Only two men walked on the Moon.', ['True', 'False'], 1);
+var question20 = new Question('Neptune’s blue color is caused by the frozen gases on its surface.', ['True', 'False'], 1);
+var question21 = new Question('The Moon is slowly moving towards the Earth.', ['True', 'False'], 1);
+var question22 = new Question('On Venus a day is longer than a year.', ['True', 'False'], 0);
+var question23 = new Question('Mercury, the planet closest to the Sun, is the hottest.', ['True', 'False'], 1);
+var question24 = new Question('A pineapple takes between 14 and 20 months to grow.', ['True', 'False'], 0);
 
 var quiz = {
   currentQuestion: 0,
-  questions: [question0, question1, question2, question3, question4, question5, question6, question7, question8, question9, question10, question11, question12, question13],
+  questionsAvailable: [question0, question1, question2, question3, question4, question5, question6, question7, question8, question9, question10, question11, question12, question13, question14, question15, question16, question17, question18, question19, question20, question21, question22, question23, question24],
   isGameOver: false,
   player1Points: 0,
   player2Points: 0
@@ -31,7 +42,18 @@ var quiz = {
 
 // return an integer that is the number of questions in a game
 function numberOfQuestions () {
-  return quiz.questions.length;
+  return 11;
+  // return quiz.questions.length;
+}
+
+function shuffle (a) {
+  var j, x, i;
+  for (i = a.length; i; i -= 1) {
+    j = Math.floor(Math.random() * i);
+    x = a[i - 1];
+    a[i - 1] = a[j];
+    a[j] = x;
+  }
 }
 
 // return an integer that is the zero-based index of the current question in the quiz
@@ -41,12 +63,12 @@ function currentQuestion () {
 
 // return an integer that is the zero-based index the correct answer for the currrent question
 function correctAnswer () {
-  return quiz.questions[quiz.currentQuestion].correctAnswer;
+  return quiz.questionsAvailable[quiz.currentQuestion].correctAnswer;
 }
 
 // return an integer that is the number of choices for the current question
 function numberOfAnswers () {
-  return quiz.questions[quiz.currentQuestion].choices.length;
+  return quiz.questionsUsed[quiz.currentQuestion].choices.length;
 }
 
 // take a single integer, which specifies which choice (true or false) the current player wants to make
@@ -102,10 +124,11 @@ var player1Score = $('#player1Score');
 var player2Score = $('#player2Score');
 var Qnumber = $('#Q');
 
+shuffle(quiz.questionsAvailable);
 updateDisplay();
 function updateDisplay () {
   Qnumber.text('Q' + (currentQuestion() + 1));
-  words.text(quiz.questions[currentQuestion()].question);
+  words.text(quiz.questionsAvailable[currentQuestion()].question);
   player1Score.text(quiz.player1Points);
   player2Score.text(quiz.player2Points);
   if (isGameOver()) {
